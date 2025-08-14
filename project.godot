@@ -11,7 +11,18 @@ config_version=5
 [application]
 
 config/name="Legally Destinct Animal Crossing"
+run/main_scene="uid://t1al5hykieb"
 config/features=PackedStringArray("4.4", "Mobile")
+boot_splash/bg_color=Color(0.0862745, 0.0862745, 0.109804, 1)
+boot_splash/show_image=false
+
+[display]
+
+window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
 
 [rendering]
 

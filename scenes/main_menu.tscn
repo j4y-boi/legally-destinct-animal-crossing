@@ -1,0 +1,89 @@
+[gd_scene load_steps=8 format=3 uid="uid://cqpg203ipxro3"]
+
+[ext_resource type="Script" uid="uid://778xx665ywhj" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="PackedScene" uid="uid://bhk7i0bsqspsy" path="res://scenes/game.tscn" id="2_wu84c"]
+[ext_resource type="PackedScene" uid="uid://cirnn0m23db06" path="res://scenes/parallax_background.tscn" id="3_bqqt6"]
+[ext_resource type="FontFile" uid="uid://bj3vg7jy0wxdy" path="res://assets/fonts/Not Jam Chunky Sans 6.ttf" id="3_wu84c"]
+[ext_resource type="AudioStream" uid="uid://bqn46dg37hw0e" path="res://assets/audio/sfx/back.wav" id="5_oa1go"]
+[ext_resource type="AudioStream" uid="uid://ddtms4pm31evc" path="res://assets/audio/sfx/hover.wav" id="6_tbmy8"]
+[ext_resource type="AudioStream" uid="uid://buni3hq4m4h13" path="res://assets/audio/sfx/confirm.wav" id="7_jk1qb"]
+
+[node name="GUI" type="Control" node_paths=PackedStringArray("fg")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l6cm7")
+playScene = ExtResource("2_wu84c")
+fg = NodePath("fg")
+
+[node name="Content" type="HFlowContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -548.0
+offset_top = -118.0
+offset_right = 548.0
+offset_bottom = 118.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+last_wrap_alignment = 2
+
+[node name="Title" type="Label" parent="Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.819702, 0.678398, 0.487625, 1)
+theme_override_colors/font_shadow_color = Color(0.387087, 0.296914, 0.170027, 1)
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/shadow_offset_y = 6
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/font = ExtResource("3_wu84c")
+theme_override_font_sizes/font_size = 78
+text = "Legally Distinct
+Animal Crossing"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="play" type="Button" parent="Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "play"
+
+[node name="exit" type="Button" parent="Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "exit"
+
+[node name="fg" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ParallaxBackground" parent="." instance=ExtResource("3_bqqt6")]
+
+[node name="Back" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_oa1go")
+volume_db = 5.0
+
+[node name="Hover" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_tbmy8")
+volume_db = 18.0
+
+[node name="Confirm" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_jk1qb")
+volume_db = 18.0
+
+[connection signal="mouse_entered" from="Content/play" to="." method="_on_play_mouse_entered"]
+[connection signal="pressed" from="Content/play" to="." method="_on_play_pressed"]
+[connection signal="mouse_entered" from="Content/exit" to="." method="_on_exit_mouse_entered"]
+[connection signal="pressed" from="Content/exit" to="." method="_on_exit_pressed"]
