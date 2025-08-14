@@ -23,7 +23,7 @@ func _on_play_pressed() -> void:
 
 func _on_exit_pressed() -> void:
 	fg.visible = true
-	$Back.play() #ehhh didnt really fit
+	$Back.play()
 	var tween = self.create_tween()
 	tween.tween_property(fg, "modulate:a", 1.0, 0.5)
 	tween.tween_interval(.5)

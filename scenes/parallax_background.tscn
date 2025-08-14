@@ -14,14 +14,14 @@ transform = Transform2D(2, 0, 0, 2, 576, 324)
 script = ExtResource("1_qs7dk")
 
 [node name="Sky" type="ParallaxLayer" parent="."]
-motion_scale = Vector2(0.1, 0.1)
+motion_scale = Vector2(0, 0)
 motion_mirroring = Vector2(576, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Sky"]
 texture = ExtResource("2_2oy3k")
 
 [node name="Sun" type="ParallaxLayer" parent="."]
-motion_scale = Vector2(0.1, 0.1)
+motion_scale = Vector2(0.05, 0.05)
 motion_mirroring = Vector2(576, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Sun"]

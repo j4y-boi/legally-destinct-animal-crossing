@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cqpg203ipxro3"]
+[gd_scene load_steps=9 format=3 uid="uid://cqpg203ipxro3"]
 
 [ext_resource type="Script" uid="uid://778xx665ywhj" path="res://scripts/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="PackedScene" uid="uid://bhk7i0bsqspsy" path="res://scenes/game.tscn" id="2_wu84c"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://bqn46dg37hw0e" path="res://assets/audio/sfx/back.wav" id="5_oa1go"]
 [ext_resource type="AudioStream" uid="uid://ddtms4pm31evc" path="res://assets/audio/sfx/hover.wav" id="6_tbmy8"]
 [ext_resource type="AudioStream" uid="uid://buni3hq4m4h13" path="res://assets/audio/sfx/confirm.wav" id="7_jk1qb"]
+[ext_resource type="AudioStream" uid="uid://bmgwy22fil6vd" path="res://assets/audio/music/s2.wav" id="8_tbmy8"]
 
 [node name="GUI" type="Control" node_paths=PackedStringArray("fg")]
 layout_mode = 3
@@ -74,14 +75,22 @@ color = Color(0, 0, 0, 1)
 [node name="Back" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_oa1go")
 volume_db = 5.0
+bus = &"SFX"
 
 [node name="Hover" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_tbmy8")
 volume_db = 18.0
+bus = &"SFX"
 
 [node name="Confirm" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_jk1qb")
 volume_db = 18.0
+bus = &"SFX"
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_tbmy8")
+autoplay = true
+bus = &"BGM"
 
 [connection signal="mouse_entered" from="Content/play" to="." method="_on_play_mouse_entered"]
 [connection signal="pressed" from="Content/play" to="." method="_on_play_pressed"]
