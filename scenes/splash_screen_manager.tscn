@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://t1al5hykieb"]
+[gd_scene load_steps=6 format=3 uid="uid://t1al5hykieb"]
 
 [ext_resource type="Script" uid="uid://bxp7kxehf6etb" path="res://scripts/splash_screen_manager.gd" id="1_kkrr7"]
 [ext_resource type="Texture2D" uid="uid://o56ml6br1g6a" path="res://assets/pfp_ circle.png" id="1_pspwt"]
 [ext_resource type="PackedScene" uid="uid://cqpg203ipxro3" path="res://scenes/main_menu.tscn" id="2_f3wds"]
 [ext_resource type="Texture2D" uid="uid://cvp434pry0xr3" path="res://assets/logo.png" id="4_dpkmb"]
 [ext_resource type="Texture2D" uid="uid://d4nku2wm1r13w" path="res://assets/godot.png" id="5_f3wds"]
-[ext_resource type="AudioStream" uid="uid://byof0veqju7ps" path="res://assets/audio/music/boss.wav" id="6_7px8g"]
 
 [node name="control" type="Control" node_paths=PackedStringArray("splash_screen_container", "fg")]
 layout_mode = 3
@@ -66,7 +65,3 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0862745, 0.0862745, 0.109804, 1)
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_7px8g")
-autoplay = true
