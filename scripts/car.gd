@@ -49,13 +49,12 @@ func newPos():
 		mat.set_shader_parameter("midColor", randomColor)
 		mat.set_shader_parameter("highColor", Color(1,1,1))
 
-	#car_back.modulate = randomColor
+	await get_tree().create_timer(randint(1,5)).timeout
 	stop = false
 
 func respawn():
 	counter = 0
 	stop = true
-	await get_tree().create_timer(randint(1,5)).timeout
 	newPos()
 
 func _process(delta: float) -> void:
@@ -66,7 +65,7 @@ func _process(delta: float) -> void:
 		var target_z = startPos[1 - current].z
 		if (current == 0 and car.global_transform.origin.z >= target_z) or (current == 1 and car.global_transform.origin.z <= target_z):
 			respawn()
-		if counter >= 600: #in case the in case we miss hitbox fails
+		if counter >= 6000: #in case the in case we miss hitbox fails
 			respawn()
 
 func _on_tunnel_1_area_entered(_area: Area3D) -> void:

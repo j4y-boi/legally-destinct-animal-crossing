@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2d8bmgklaqc6"]
+
+[ext_resource type="PackedScene" uid="uid://d26i65sxpbrb5" path="res://assets/models/construction-barrier.glb" id="1_qfl2k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ilpk"]
+albedo_color = Color(0.485703, 0.485704, 0.485703, 1)
+
+[node name="construction-barrier2" instance=ExtResource("1_qfl2k")]
+
+[node name="construction-barrier" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8ilpk")
