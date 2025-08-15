@@ -1,9 +1,10 @@
-[gd_scene load_steps=80 format=3 uid="uid://bhk7i0bsqspsy"]
+[gd_scene load_steps=102 format=3 uid="uid://bhk7i0bsqspsy"]
 
 [ext_resource type="Texture2D" uid="uid://omu30pm00fnn" path="res://assets/sky/1.png" id="1_ir15t"]
 [ext_resource type="PackedScene" uid="uid://dbwj6t0r0pamj" path="res://assets/models/tree_thin.glb" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://b7ij482s288hc" path="res://assets/models/ground_grass.glb" id="2_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://d310wkido4uno" path="res://assets/models/road-straight.glb" id="3_iywne"]
+[ext_resource type="PackedScene" uid="uid://y66mlywahjs2" path="res://assets/models/road-crossing.glb" id="4_bt5mj"]
 [ext_resource type="PackedScene" uid="uid://bf5yj54f57nqc" path="res://assets/models/tree_tall.glb" id="4_iywne"]
 [ext_resource type="PackedScene" uid="uid://dfcbadsgfrvg5" path="res://assets/models/tree_simple.glb" id="5_p57ef"]
 [ext_resource type="AudioStream" uid="uid://cyl61v5uj8ym2" path="res://assets/audio/music/s1.wav" id="6_p57ef"]
@@ -19,6 +20,9 @@
 [ext_resource type="Shader" uid="uid://cbkhjxyw54nxu" path="res://scripts/car.gdshader" id="15_264po"]
 [ext_resource type="PackedScene" uid="uid://xkqnqj2abwnr" path="res://assets/models/cc0_-_camera.glb" id="16_rysoc"]
 [ext_resource type="PackedScene" uid="uid://n2lfa8ywtsq2" path="res://assets/models/light-square.glb" id="17_ssvqc"]
+[ext_resource type="PackedScene" uid="uid://bdh237edtmaqi" path="res://assets/models/fence_planks.glb" id="21_e1j6l"]
+[ext_resource type="PackedScene" uid="uid://bglql8m57h20l" path="res://assets/models/sign.glb" id="22_pl11u"]
+[ext_resource type="FontFile" uid="uid://bj3vg7jy0wxdy" path="res://assets/fonts/Not Jam Chunky Sans 6.ttf" id="23_bhx41"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ca42v"]
 panorama = ExtResource("1_ir15t")
@@ -41,7 +45,7 @@ albedo_color = Color(0.521141, 0.521141, 0.521141, 1)
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ssvqc"]
-size = Vector3(9, 83, 2)
+size = Vector3(9, 81.6464, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_264po"]
 size = Vector3(9, 83, 2)
@@ -425,7 +429,7 @@ animations = [{
 [sub_resource type="BoxShape3D" id="BoxShape3D_1kice"]
 size = Vector3(5.91579, 4.11237, 0.28186)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_264po"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bt5mj"]
 render_priority = 0
 shader = ExtResource("15_264po")
 shader_parameter/grayscaleTexture = ExtResource("13_trtic")
@@ -433,10 +437,256 @@ shader_parameter/lowColor = Vector4(0, 0, 0, 1)
 shader_parameter/midColor = Vector4(0, 0, 0, 1)
 shader_parameter/highColor = Vector4(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1kice"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e1j6l"]
 render_priority = 0
 shader = ExtResource("15_264po")
 shader_parameter/grayscaleTexture = ExtResource("14_ir15t")
+shader_parameter/lowColor = Vector4(0, 0, 0, 1)
+shader_parameter/midColor = Vector4(0, 0, 0, 1)
+shader_parameter/highColor = Vector4(1, 1, 1, 1)
+
+[sub_resource type="Shader" id="Shader_bt5mj"]
+code = "shader_type spatial;
+
+uniform sampler2D grayscaleTexture;
+uniform vec4 lowColor = vec4(1.0, 0.0, 0.0, 1.0);
+uniform vec4 midColor = vec4(0.0, 1.0, 0.0, 1.0);
+uniform vec4 highColor = vec4(0.0, 0.0, 1.0, 1.0);
+
+void fragment() {
+    // Get the texture size
+    ivec2 texSize = textureSize(grayscaleTexture, 0);
+
+    // Convert UV to integer pixel coordinates
+    ivec2 pixelCoord = ivec2(UV * vec2(texSize));
+
+    // Sample exact pixel (nearest-neighbor)
+    vec4 texColor = texelFetch(grayscaleTexture, pixelCoord, 0);
+
+    // Convert to grayscale
+    float gray = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
+
+    // Interpolate between low, mid, high colors
+    vec4 color = mix(lowColor, midColor, gray);
+    color = mix(color, highColor, pow(gray, 1.0));
+
+    ALBEDO = color.rgb;
+    ALPHA = texColor.a;
+}
+// shader was largely written with a tutorial, gpt used for nearest pixels... sorry :c"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_e1j6l"]
+load_path = "res://.godot/imported/front.png-4761124ca5dc73335877f6a1a9062df9.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pl11u"]
+render_priority = 0
+shader = SubResource("Shader_bt5mj")
+shader_parameter/grayscaleTexture = SubResource("CompressedTexture2D_e1j6l")
+shader_parameter/lowColor = Vector4(0, 0, 0, 1)
+shader_parameter/midColor = Vector4(0, 0, 0, 1)
+shader_parameter/highColor = Vector4(1, 1, 1, 1)
+
+[sub_resource type="Shader" id="Shader_bhx41"]
+code = "shader_type spatial;
+
+uniform sampler2D grayscaleTexture;
+uniform vec4 lowColor = vec4(1.0, 0.0, 0.0, 1.0);
+uniform vec4 midColor = vec4(0.0, 1.0, 0.0, 1.0);
+uniform vec4 highColor = vec4(0.0, 0.0, 1.0, 1.0);
+
+void fragment() {
+    // Get the texture size
+    ivec2 texSize = textureSize(grayscaleTexture, 0);
+
+    // Convert UV to integer pixel coordinates
+    ivec2 pixelCoord = ivec2(UV * vec2(texSize));
+
+    // Sample exact pixel (nearest-neighbor)
+    vec4 texColor = texelFetch(grayscaleTexture, pixelCoord, 0);
+
+    // Convert to grayscale
+    float gray = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
+
+    // Interpolate between low, mid, high colors
+    vec4 color = mix(lowColor, midColor, gray);
+    color = mix(color, highColor, pow(gray, 1.0));
+
+    ALBEDO = color.rgb;
+    ALPHA = texColor.a;
+}
+// shader was largely written with a tutorial, gpt used for nearest pixels... sorry :c"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qnb83"]
+load_path = "res://.godot/imported/rear.png-09cb35d4c13dbc0e5816d1a6e3ba3945.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sww3w"]
+render_priority = 0
+shader = SubResource("Shader_bhx41")
+shader_parameter/grayscaleTexture = SubResource("CompressedTexture2D_qnb83")
+shader_parameter/lowColor = Vector4(0, 0, 0, 1)
+shader_parameter/midColor = Vector4(0, 0, 0, 1)
+shader_parameter/highColor = Vector4(1, 1, 1, 1)
+
+[sub_resource type="Shader" id="Shader_suyxu"]
+code = "shader_type spatial;
+
+uniform sampler2D grayscaleTexture;
+uniform vec4 lowColor = vec4(1.0, 0.0, 0.0, 1.0);
+uniform vec4 midColor = vec4(0.0, 1.0, 0.0, 1.0);
+uniform vec4 highColor = vec4(0.0, 0.0, 1.0, 1.0);
+
+void fragment() {
+    // Get the texture size
+    ivec2 texSize = textureSize(grayscaleTexture, 0);
+
+    // Convert UV to integer pixel coordinates
+    ivec2 pixelCoord = ivec2(UV * vec2(texSize));
+
+    // Sample exact pixel (nearest-neighbor)
+    vec4 texColor = texelFetch(grayscaleTexture, pixelCoord, 0);
+
+    // Convert to grayscale
+    float gray = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
+
+    // Interpolate between low, mid, high colors
+    vec4 color = mix(lowColor, midColor, gray);
+    color = mix(color, highColor, pow(gray, 1.0));
+
+    ALBEDO = color.rgb;
+    ALPHA = texColor.a;
+}
+// shader was largely written with a tutorial, gpt used for nearest pixels... sorry :c"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_sgl2t"]
+load_path = "res://.godot/imported/front.png-4761124ca5dc73335877f6a1a9062df9.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qouja"]
+render_priority = 0
+shader = SubResource("Shader_suyxu")
+shader_parameter/grayscaleTexture = SubResource("CompressedTexture2D_sgl2t")
+shader_parameter/lowColor = Vector4(0, 0, 0, 1)
+shader_parameter/midColor = Vector4(0, 0, 0, 1)
+shader_parameter/highColor = Vector4(1, 1, 1, 1)
+
+[sub_resource type="Shader" id="Shader_wljb1"]
+code = "shader_type spatial;
+
+uniform sampler2D grayscaleTexture;
+uniform vec4 lowColor = vec4(1.0, 0.0, 0.0, 1.0);
+uniform vec4 midColor = vec4(0.0, 1.0, 0.0, 1.0);
+uniform vec4 highColor = vec4(0.0, 0.0, 1.0, 1.0);
+
+void fragment() {
+    // Get the texture size
+    ivec2 texSize = textureSize(grayscaleTexture, 0);
+
+    // Convert UV to integer pixel coordinates
+    ivec2 pixelCoord = ivec2(UV * vec2(texSize));
+
+    // Sample exact pixel (nearest-neighbor)
+    vec4 texColor = texelFetch(grayscaleTexture, pixelCoord, 0);
+
+    // Convert to grayscale
+    float gray = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
+
+    // Interpolate between low, mid, high colors
+    vec4 color = mix(lowColor, midColor, gray);
+    color = mix(color, highColor, pow(gray, 1.0));
+
+    ALBEDO = color.rgb;
+    ALPHA = texColor.a;
+}
+// shader was largely written with a tutorial, gpt used for nearest pixels... sorry :c"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_v2yb1"]
+load_path = "res://.godot/imported/rear.png-09cb35d4c13dbc0e5816d1a6e3ba3945.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_js0lu"]
+render_priority = 0
+shader = SubResource("Shader_wljb1")
+shader_parameter/grayscaleTexture = SubResource("CompressedTexture2D_v2yb1")
+shader_parameter/lowColor = Vector4(0, 0, 0, 1)
+shader_parameter/midColor = Vector4(0, 0, 0, 1)
+shader_parameter/highColor = Vector4(1, 1, 1, 1)
+
+[sub_resource type="Shader" id="Shader_gxtfn"]
+code = "shader_type spatial;
+
+uniform sampler2D grayscaleTexture;
+uniform vec4 lowColor = vec4(1.0, 0.0, 0.0, 1.0);
+uniform vec4 midColor = vec4(0.0, 1.0, 0.0, 1.0);
+uniform vec4 highColor = vec4(0.0, 0.0, 1.0, 1.0);
+
+void fragment() {
+    // Get the texture size
+    ivec2 texSize = textureSize(grayscaleTexture, 0);
+
+    // Convert UV to integer pixel coordinates
+    ivec2 pixelCoord = ivec2(UV * vec2(texSize));
+
+    // Sample exact pixel (nearest-neighbor)
+    vec4 texColor = texelFetch(grayscaleTexture, pixelCoord, 0);
+
+    // Convert to grayscale
+    float gray = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
+
+    // Interpolate between low, mid, high colors
+    vec4 color = mix(lowColor, midColor, gray);
+    color = mix(color, highColor, pow(gray, 1.0));
+
+    ALBEDO = color.rgb;
+    ALPHA = texColor.a;
+}
+// shader was largely written with a tutorial, gpt used for nearest pixels... sorry :c"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_twgab"]
+load_path = "res://.godot/imported/front.png-4761124ca5dc73335877f6a1a9062df9.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_02fa5"]
+render_priority = 0
+shader = SubResource("Shader_gxtfn")
+shader_parameter/grayscaleTexture = SubResource("CompressedTexture2D_twgab")
+shader_parameter/lowColor = Vector4(0, 0, 0, 1)
+shader_parameter/midColor = Vector4(0, 0, 0, 1)
+shader_parameter/highColor = Vector4(1, 1, 1, 1)
+
+[sub_resource type="Shader" id="Shader_nepv3"]
+code = "shader_type spatial;
+
+uniform sampler2D grayscaleTexture;
+uniform vec4 lowColor = vec4(1.0, 0.0, 0.0, 1.0);
+uniform vec4 midColor = vec4(0.0, 1.0, 0.0, 1.0);
+uniform vec4 highColor = vec4(0.0, 0.0, 1.0, 1.0);
+
+void fragment() {
+    // Get the texture size
+    ivec2 texSize = textureSize(grayscaleTexture, 0);
+
+    // Convert UV to integer pixel coordinates
+    ivec2 pixelCoord = ivec2(UV * vec2(texSize));
+
+    // Sample exact pixel (nearest-neighbor)
+    vec4 texColor = texelFetch(grayscaleTexture, pixelCoord, 0);
+
+    // Convert to grayscale
+    float gray = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
+
+    // Interpolate between low, mid, high colors
+    vec4 color = mix(lowColor, midColor, gray);
+    color = mix(color, highColor, pow(gray, 1.0));
+
+    ALBEDO = color.rgb;
+    ALPHA = texColor.a;
+}
+// shader was largely written with a tutorial, gpt used for nearest pixels... sorry :c"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7025r"]
+load_path = "res://.godot/imported/rear.png-09cb35d4c13dbc0e5816d1a6e3ba3945.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m4url"]
+render_priority = 0
+shader = SubResource("Shader_nepv3")
+shader_parameter/grayscaleTexture = SubResource("CompressedTexture2D_7025r")
 shader_parameter/lowColor = Vector4(0, 0, 0, 1)
 shader_parameter/midColor = Vector4(0, 0, 0, 1)
 shader_parameter/highColor = Vector4(1, 1, 1, 1)
@@ -471,7 +721,7 @@ material = SubResource("StandardMaterial3D_lbhrr")
 [node name="tunnel1" type="Area3D" parent="Map/wall1/CSGCylinder3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map/wall1/CSGCylinder3D/tunnel1"]
-transform = Transform3D(1, 0, 0, 0, 1, -1.13687e-13, 0, 0, 1, -2.08616e-07, -40.2081, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, -1.13687e-13, 0, 0, 1, -2.08616e-07, -40.8849, -0.5)
 shape = SubResource("BoxShape3D_ssvqc")
 
 [node name="wall2" type="CSGCombiner3D" parent="Map"]
@@ -489,7 +739,7 @@ material = SubResource("StandardMaterial3D_lbhrr")
 [node name="tunnel2" type="Area3D" parent="Map/wall2/CSGCylinder3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map/wall2/CSGCylinder3D/tunnel2"]
-transform = Transform3D(1.00039, 4.44089e-16, 0, 0, 1.00039, -1.13687e-13, 2.11758e-22, 0, 1.00039, -2.98023e-08, -40.332, -0.5)
+transform = Transform3D(1.00039, 4.44089e-16, 0, 0, 1.00039, -1.13687e-13, 2.11758e-22, 0, 1.00039, -2.98023e-08, -41.3528, -0.5)
 shape = SubResource("BoxShape3D_264po")
 debug_color = Color(1, 1, 1, 1)
 
@@ -498,6 +748,113 @@ transform = Transform3D(149.76, 0, 0, 0, 20, 0, 0, 0, 81.4, -0.0718689, 1.61695,
 
 [node name="road" parent="Map" instance=ExtResource("3_iywne")]
 transform = Transform3D(-3.56685e-06, 0, 16, 0, 16, 0, -81.6, 0, -6.99382e-07, -8.60978, 0.610689, 2.77647)
+
+[node name="road-crossing2" parent="Map" instance=ExtResource("4_bt5mj")]
+transform = Transform3D(-6.99382e-07, 0, -16, 0, 16, 0, 16, 0, -6.99382e-07, -8.61, 0.611, 2.766)
+
+[node name="4fences" type="Node3D" parent="Map"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -18, 2, 24)
+
+[node name="fence_planks2" parent="Map/4fences" instance=ExtResource("21_e1j6l")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, 3.548, -1, 13)
+
+[node name="fence_planks3" parent="Map/4fences" instance=ExtResource("21_e1j6l")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, 3.548, -1, 4.5)
+
+[node name="fence_planks4" parent="Map/4fences" instance=ExtResource("21_e1j6l")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, 3.548, -1, -4)
+
+[node name="fence_planks5" parent="Map/4fences" instance=ExtResource("21_e1j6l")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, 3.548, -1, -12.5)
+
+[node name="4fences2" type="Node3D" parent="Map"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -18, 2, -18.5)
+
+[node name="fence_planks2" parent="Map/4fences2" instance=ExtResource("21_e1j6l")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, 3.548, -1, 13)
+
+[node name="fence_planks3" parent="Map/4fences2" instance=ExtResource("21_e1j6l")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, 3.548, -1, 4.5)
+
+[node name="fence_planks4" parent="Map/4fences2" instance=ExtResource("21_e1j6l")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, 3.548, -1, -4)
+
+[node name="fence_planks5" parent="Map/4fences2" instance=ExtResource("21_e1j6l")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, 3.548, -1, -12.5)
+
+[node name="4fences3" type="Node3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 24)
+
+[node name="fence_planks2" parent="Map/4fences3" instance=ExtResource("21_e1j6l")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, 3.548, -1, 13)
+
+[node name="fence_planks3" parent="Map/4fences3" instance=ExtResource("21_e1j6l")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, 3.548, -1, 4.5)
+
+[node name="fence_planks4" parent="Map/4fences3" instance=ExtResource("21_e1j6l")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, 3.548, -1, -4)
+
+[node name="fence_planks5" parent="Map/4fences3" instance=ExtResource("21_e1j6l")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, 3.548, -1, -12.5)
+
+[node name="4fences4" type="Node3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, -18.5)
+
+[node name="fence_planks2" parent="Map/4fences4" instance=ExtResource("21_e1j6l")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, 3.548, -1, 13)
+
+[node name="fence_planks3" parent="Map/4fences4" instance=ExtResource("21_e1j6l")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, 3.548, -1, 4.5)
+
+[node name="fence_planks4" parent="Map/4fences4" instance=ExtResource("21_e1j6l")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, 3.548, -1, -4)
+
+[node name="fence_planks5" parent="Map/4fences4" instance=ExtResource("21_e1j6l")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, 3.548, -1, -12.5)
+
+[node name="Sign" parent="Map" instance=ExtResource("22_pl11u")]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, -15.8356, 1.1361, -4.42704)
+
+[node name="Label3D" type="Label3D" parent="Map/Sign"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.258955, -0.0560017)
+pixel_size = 0.0005
+texture_filter = 0
+text = "ANIMAL
+CROSSING"
+font = ExtResource("23_bhx41")
+font_size = 60
+
+[node name="Label3D2" type="Label3D" parent="Map/Sign"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.206059, -0.0560017)
+pixel_size = 0.0002
+texture_filter = 0
+modulate = Color(1, 0, 0, 1)
+text = "Beware of 
+crossing animals"
+font = ExtResource("23_bhx41")
+font_size = 60
+
+[node name="Sign2" parent="Map" instance=ExtResource("22_pl11u")]
+transform = Transform3D(-8, 0, -6.99382e-07, 0, 8, 0, 6.99382e-07, 0, -8, -1.27719, 1.1361, 11.573)
+
+[node name="Label3D" type="Label3D" parent="Map/Sign2"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.258955, -0.0560017)
+pixel_size = 0.0005
+texture_filter = 0
+text = "ANIMAL
+CROSSING"
+font = ExtResource("23_bhx41")
+font_size = 60
+
+[node name="Label3D2" type="Label3D" parent="Map/Sign2"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.206059, -0.0560017)
+pixel_size = 0.0002
+texture_filter = 0
+modulate = Color(1, 0, 0, 1)
+text = "Beware of 
+crossing animals"
+font = ExtResource("23_bhx41")
+font_size = 60
 
 [node name="trees" type="Node" parent="."]
 
@@ -662,14 +1019,89 @@ shape = SubResource("BoxShape3D_1kice")
 
 [node name="carFront" type="Sprite3D" parent="car/carHitbox/CollisionShape3D"]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
-material_override = SubResource("ShaderMaterial_264po")
+material_override = SubResource("ShaderMaterial_bt5mj")
 double_sided = false
 texture_filter = 0
 texture = ExtResource("13_trtic")
 
 [node name="carBack" type="Sprite3D" parent="car/carHitbox/CollisionShape3D"]
 transform = Transform3D(-5, 0, -4.37114e-07, 0, 5, 0, 4.37114e-07, 0, -5, 0, 0, 0)
-material_override = SubResource("ShaderMaterial_1kice")
+material_override = SubResource("ShaderMaterial_e1j6l")
+double_sided = false
+texture_filter = 0
+texture = ExtResource("14_ir15t")
+
+[node name="car2" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.4, 3, -1.3)
+rotation_order = 0
+script = ExtResource("14_trtic")
+
+[node name="carHitbox" type="Area3D" parent="car2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="car2/carHitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0295639, 0.0191345, -0.0696411)
+shape = SubResource("BoxShape3D_1kice")
+
+[node name="carFront" type="Sprite3D" parent="car2/carHitbox/CollisionShape3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_pl11u")
+double_sided = false
+texture_filter = 0
+texture = ExtResource("13_trtic")
+
+[node name="carBack" type="Sprite3D" parent="car2/carHitbox/CollisionShape3D"]
+transform = Transform3D(-5, 0, -4.37114e-07, 0, 5, 0, 4.37114e-07, 0, -5, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_sww3w")
+double_sided = false
+texture_filter = 0
+texture = ExtResource("14_ir15t")
+
+[node name="car3" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.4, 3, -1.3)
+rotation_order = 0
+script = ExtResource("14_trtic")
+
+[node name="carHitbox" type="Area3D" parent="car3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="car3/carHitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0295639, 0.0191345, -0.0696411)
+shape = SubResource("BoxShape3D_1kice")
+
+[node name="carFront" type="Sprite3D" parent="car3/carHitbox/CollisionShape3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_qouja")
+double_sided = false
+texture_filter = 0
+texture = ExtResource("13_trtic")
+
+[node name="carBack" type="Sprite3D" parent="car3/carHitbox/CollisionShape3D"]
+transform = Transform3D(-5, 0, -4.37114e-07, 0, 5, 0, 4.37114e-07, 0, -5, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_js0lu")
+double_sided = false
+texture_filter = 0
+texture = ExtResource("14_ir15t")
+
+[node name="car4" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.4, 3, -1.3)
+rotation_order = 0
+script = ExtResource("14_trtic")
+
+[node name="carHitbox" type="Area3D" parent="car4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="car4/carHitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0295639, 0.0191345, -0.0696411)
+shape = SubResource("BoxShape3D_1kice")
+
+[node name="carFront" type="Sprite3D" parent="car4/carHitbox/CollisionShape3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_02fa5")
+double_sided = false
+texture_filter = 0
+texture = ExtResource("13_trtic")
+
+[node name="carBack" type="Sprite3D" parent="car4/carHitbox/CollisionShape3D"]
+transform = Transform3D(-5, 0, -4.37114e-07, 0, 5, 0, 4.37114e-07, 0, -5, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_m4url")
 double_sided = false
 texture_filter = 0
 texture = ExtResource("14_ir15t")
@@ -699,5 +1131,5 @@ transform = Transform3D(-2, 0, -3.01992e-07, 0, 2, 0, 3.01992e-07, 0, -2, -17.48
 transform = Transform3D(0.990596, -0.00214911, -0.136805, 0.0354122, 0.969834, 0.241181, 0.13216, -0.243758, 0.960789, -17.429, 8.30396, 25.6415)
 fov = 40.0
 
-[connection signal="area_entered" from="Map/wall1/CSGCylinder3D/tunnel1" to="car" method="_on_tunnel_1_area_entered"]
-[connection signal="area_entered" from="Map/wall2/CSGCylinder3D/tunnel2" to="car" method="_on_tunnel_2_area_entered"]
+[connection signal="area_entered" from="Map/wall1/CSGCylinder3D/tunnel1" to="car4" method="_on_tunnel_1_area_entered"]
+[connection signal="area_entered" from="Map/wall2/CSGCylinder3D/tunnel2" to="car4" method="_on_tunnel_2_area_entered"]
