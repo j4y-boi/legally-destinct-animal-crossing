@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://cqpg203ipxro3"]
 
 [ext_resource type="Script" uid="uid://778xx665ywhj" path="res://scripts/main_menu.gd" id="1_l6cm7"]
-[ext_resource type="PackedScene" uid="uid://bhk7i0bsqspsy" path="res://scenes/game.tscn" id="2_wu84c"]
+[ext_resource type="PackedScene" uid="uid://d4d271iit37di" path="res://scenes/test.tscn" id="2_tbmy8"]
 [ext_resource type="PackedScene" uid="uid://cirnn0m23db06" path="res://scenes/parallax_background.tscn" id="3_bqqt6"]
 [ext_resource type="FontFile" uid="uid://bj3vg7jy0wxdy" path="res://assets/fonts/Not Jam Chunky Sans 6.ttf" id="3_wu84c"]
 [ext_resource type="AudioStream" uid="uid://bqn46dg37hw0e" path="res://assets/audio/sfx/back.wav" id="5_oa1go"]
@@ -17,7 +17,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l6cm7")
-playScene = ExtResource("2_wu84c")
+playScene = ExtResource("2_tbmy8")
 fg = NodePath("fg")
 
 [node name="Content" type="HFlowContainer" parent="."]

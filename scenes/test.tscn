@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://d4d271iit37di"]
+[gd_scene load_steps=4 format=3 uid="uid://d4d271iit37di"]
 
 [ext_resource type="Script" uid="uid://e7i73opncj30" path="res://scripts/cams.gd" id="1_bl13t"]
+[ext_resource type="FontFile" uid="uid://c30jgshb7bi81" path="res://assets/fonts/NotJamChunkySansOriginal.ttf" id="2_iyx0m"]
+[ext_resource type="FontFile" uid="uid://bj3vg7jy0wxdy" path="res://assets/fonts/Not Jam Chunky Sans 6.ttf" id="3_74lek"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -11,6 +13,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bl13t")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.377919, 0.377919, 0.377919, 1)
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -20,15 +31,70 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="camcontainer1" type="SubViewportContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
+stretch = true
 
 [node name="cam1" type="SubViewport" parent="HBoxContainer/camcontainer1"]
 handle_input_locally = false
+size = Vector2i(700, 648)
 render_target_update_mode = 4
 
-[node name="camcontainer2" type="SubViewportContainer" parent="HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
 layout_mode = 2
 
-[node name="cam2" type="SubViewport" parent="HBoxContainer/camcontainer2"]
-handle_input_locally = false
-render_target_update_mode = 4
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_iyx0m")
+text = "A.C.A. (Animal Crossing Agency)
+CONTROL PANEL
+-------------"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_iyx0m")
+text = "- Camera Controls -"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="switch" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_74lek")
+theme_override_font_sizes/font_size = 18
+text = "Switch camera"
+
+[node name="Spacer2" type="Control" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_iyx0m")
+text = "- Gate Controls -"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="close" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_74lek")
+theme_override_font_sizes/font_size = 18
+text = "Close gate"
+
+[node name="close2" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_74lek")
+theme_override_font_sizes/font_size = 18
+text = "Open Gate"
+
+[connection signal="button_up" from="HBoxContainer/VBoxContainer/switch" to="." method="_on_switch_button_up"]
