@@ -638,6 +638,7 @@ shadow_enabled = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_p57ef")
+volume_db = -1.0
 autoplay = true
 bus = &"BGM"
 
@@ -1047,6 +1048,10 @@ libraries = {
 &"": SubResource("AnimationLibrary_qouja")
 }
 
+[node name="gateCloser" type="Timer" parent="barrier"]
+wait_time = 6.0
+one_shot = true
+
 [node name="exit" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="exit"]
@@ -1068,3 +1073,4 @@ shape = SubResource("BoxShape3D_sww3w")
 
 [connection signal="area_entered" from="car1/carHitbox" to="animal/animal" method="_on_car_hitbox_area_entered"]
 [connection signal="area_entered" from="car2/carHitbox" to="animal/animal" method="_on_car_hitbox_area_entered"]
+[connection signal="timeout" from="barrier/gateCloser" to="barrier" method="_on_gate_closer_timeout"]

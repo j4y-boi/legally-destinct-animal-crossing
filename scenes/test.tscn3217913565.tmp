@@ -46,20 +46,15 @@ handle_input_locally = false
 size = Vector2i(700, 648)
 render_target_update_mode = 4
 
-[node name="right" type="VBoxContainer" parent="HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 
-[node name="controls" type="VBoxContainer" parent="HBoxContainer/right"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="Spacer5" type="Control" parent="HBoxContainer/right/controls"]
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="HBoxContainer/right/controls"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_iyx0m")
 text = "A.C.A. (Animal Crossing Agency)
@@ -68,46 +63,46 @@ CONTROL PANEL
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Spacer" type="Control" parent="HBoxContainer/right/controls"]
+[node name="Spacer" type="Control" parent="HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="HBoxContainer/right/controls"]
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_iyx0m")
 text = "- Camera Controls -"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="switch" type="Button" parent="HBoxContainer/right/controls"]
+[node name="switch" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_74lek")
 theme_override_font_sizes/font_size = 18
 text = "Switch camera"
 
-[node name="Spacer2" type="Control" parent="HBoxContainer/right/controls"]
+[node name="Spacer2" type="Control" parent="HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="HBoxContainer/right/controls"]
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_iyx0m")
 text = "- Gate Controls -"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="Button" parent="HBoxContainer/right/controls"]
+[node name="toggle" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_74lek")
 theme_override_font_sizes/font_size = 18
 text = "Toggle Gate
 "
 
-[node name="Spacer3" type="Control" parent="HBoxContainer/right/controls"]
+[node name="Spacer3" type="Control" parent="HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="Label4" type="Label" parent="HBoxContainer/right/controls"]
+[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.99, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_iyx0m")
@@ -115,35 +110,13 @@ text = "- EMERGENCIES -"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="exit" type="Button" parent="HBoxContainer/right/controls"]
+[node name="exit" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.97, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_74lek")
 theme_override_font_sizes/font_size = 18
 text = "RESTART THE UNIVERSE
 (aka return to main menu)"
-
-[node name="Spacer4" type="Control" parent="HBoxContainer/right/controls"]
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer/right/controls"]
-layout_mode = 2
-
-[node name="stats" type="VBoxContainer" parent="HBoxContainer/right"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="title" type="Label" parent="HBoxContainer/right/stats"]
-layout_mode = 2
-text = "Stats
------"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="time" type="Label" parent="HBoxContainer/right/stats"]
-layout_mode = 2
-text = "Time on the clock : LOADING..."
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 visible = false
@@ -155,6 +128,6 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[connection signal="pressed" from="HBoxContainer/right/controls/switch" to="." method="_on_switch_pressed"]
-[connection signal="pressed" from="HBoxContainer/right/controls/toggle" to="." method="_on_close_pressed"]
-[connection signal="pressed" from="HBoxContainer/right/controls/exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/switch" to="." method="_on_switch_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/toggle" to="." method="_on_close_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/exit" to="." method="_on_exit_pressed"]

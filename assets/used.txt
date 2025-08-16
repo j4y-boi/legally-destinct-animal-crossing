@@ -1,7 +1,8 @@
 Assets I used (most if not all are licensed under CC0):
 
-- Music -
+- Audio -
 https://opengameart.org/content/4-chiptunes-adventure
+https://opengameart.org/content/50-cc0-retro-synth-sfx
 
 - Art -
 https://patricio449.itch.io/free-simple-car-pixel-art-sprite
