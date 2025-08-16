@@ -88,7 +88,7 @@ func _process(delta: float) -> void:
 	if not stop:
 		var distance2 = car_hitbox2.global_transform.origin.distance_to(animal.global_transform.origin)
 		var distance1 = car_hitbox.global_transform.origin.distance_to(animal.global_transform.origin)
-		var t = 15
+		var t = 10
 		print(str(distance1)+" | "+ str(distance2))
 		
 		if (distance1 <= t or distance2 <= t) and not hit:
