@@ -49,7 +49,7 @@ stretch = true
 
 [node name="cam1" type="SubViewport" parent="HBoxContainer/camcontainer1"]
 handle_input_locally = false
-size = Vector2i(700, 648)
+size = Vector2i(700, 649)
 render_target_update_mode = 4
 
 [node name="right" type="VBoxContainer" parent="HBoxContainer"]
@@ -172,10 +172,8 @@ layout_mode = 2
 text = "Overal efficiency: LOADING..."
 
 [node name="magic" type="Label" parent="HBoxContainer/right/stats"]
-visible = false
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 20
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "121212323431441234143124241234214123411232131333"
 
 [node name="ColorRect2" type="ColorRect" parent="."]

@@ -3,10 +3,13 @@ extends Control
 @onready var cam1: SubViewport = $HBoxContainer/camcontainer1/cam1
 @onready var camcontainer_1: SubViewportContainer = $HBoxContainer/camcontainer1
 @onready var fg: ColorRect = $ColorRect2
+@onready var window: MarginContainer = $HBoxContainer/MarginContainer
+@onready var bg: ColorRect = $ColorRect
 
 var currentCam = 1
 var game_scene = preload("res://scenes/game.tscn")
 var scene1 = game_scene.instantiate()
+const debug = false
 
 #keepin it for that stats
 var score = 0
@@ -16,6 +19,11 @@ var carpassed
 func _ready():
 	cam1.add_child(scene1)
 	scene1.get_node("lantern/Camera3D2").current = true
+	
+	if debug:
+		bg.visible = false
+		window.visible = true
+		camcontainer_1.visible = false
 
 func _process(delta: float) -> void:
 	score = scene1.get_node("Variables").score
@@ -23,12 +31,15 @@ func _process(delta: float) -> void:
 	carpassed = scene1.get_node("Variables").carpassed
 
 func _on_switch_pressed() -> void:
-	if currentCam == 1:
-		currentCam = 2
-		scene1.get_node("lantern2/Camera3D").current = true
+	if not debug:
+		if currentCam == 1:
+			currentCam = 2
+			scene1.get_node("lantern2/Camera3D").current = true
+		else:
+			currentCam = 1
+			scene1.get_node("lantern/Camera3D2").current = true
 	else:
-		currentCam = 1
-		scene1.get_node("lantern/Camera3D2").current = true
+		print("use freecam hobo")
 
 func _on_close_pressed() -> void:
 	var is_up = scene1.get_node("barrier").is_up

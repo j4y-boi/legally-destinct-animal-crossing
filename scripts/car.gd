@@ -64,7 +64,7 @@ func _process(delta: float) -> void:
 	if not stop:
 		counter += 1
 		if gateOpen:
-			car.translate(Vector3(0,0,(SPEED/2) * delta))
+			car.translate(Vector3(0,0,float(SPEED)/2 * delta))
 		else:
 			car.translate(Vector3(0,0,(SPEED + randomOffset) * delta))
 		# in case we miss hitbox
@@ -85,7 +85,7 @@ func _on_tunnel_2_area_entered(_area: Area3D) -> void:
 		respawn()
 
 func _ready() -> void:
-	current = int(car.name.left(4))%2
+	current = int(str(car.name)[3])%2
 	car.position = startPos[current]
 	car.rotation = startRot[current]
 	stop = true

@@ -171,13 +171,6 @@ text = "Cars passed: LOADING..."
 layout_mode = 2
 text = "Overal efficiency: LOADING..."
 
-[node name="magic" type="Label" parent="HBoxContainer/right/stats"]
-visible = false
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 20
-text = "121212323431441234143124241234214123411232131333"
-
 [node name="ColorRect2" type="ColorRect" parent="."]
 visible = false
 layout_mode = 1

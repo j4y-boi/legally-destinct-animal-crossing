@@ -2,6 +2,7 @@ extends VBoxContainer
 
 var time_in_scene: float = 0.0
 @onready var head: Control = $"../../.."
+var rng = RandomNumberGenerator.new()
 
 func format_time(seconds: float) -> String:
 	var second = int(seconds)
@@ -15,14 +16,21 @@ func _process(delta: float) -> void:
 	var score = head.score
 	var accidents = head.accidents
 	var passed = head.carpassed
-	var accuracy = 0.0
+	var accuracy: float = 0.0
+	#var nu: String
+	
+	#for i in range(48):
+	#	nu += str(randi_range(0,9))
 	
 	$time.text = "Time on the clock : " + format_time(time_in_scene)
 	$amount.text = "Animals successfully let through: " + str(score)
 	$accidents.text = "Accidents: " + str(accidents)
 	$cars.text = "Cars passed: " + str(passed)
 	if score + accidents > 0:
-		accuracy = score / (score + accidents) * 100
+		accuracy = float(score) / float(score + accidents) * 100
 	else:
-		accuracy = 0
-	$score.text = "Overal efficiency:" + str(accuracy) + "%"
+		accuracy = 100.0
+	$score.text = "Success rate: " + str(int(accuracy)) + "%"
+	#$magic.text = nu
+	#var debg = str(score) + " / (" + str(score) + " + " + str(accidents) + ") * 100 = " + str(accuracy)
+	#print(debg)

@@ -1,13 +1,13 @@
 extends AnimatedSprite3D
 
 @onready var animal: AnimatedSprite3D = $"."
-@onready var smok: GPUParticles3D = $smok
-@onready var exit: Area3D = $"../../exit"
-@onready var entrance: Area3D = $"../../entrance"
-@onready var variables: Node = $"../../Variables"
-@onready var barrier: Node3D = $"../../barrier"
-@onready var car_hitbox: Area3D = $"../../car1/carHitbox"
-@onready var car_hitbox2: Area3D = $"../../car2/carHitbox"
+@onready var smok: GPUParticles3D = $"smok"
+@onready var exit: Area3D = $"../exit"
+@onready var entrance: Area3D = $"../entrance"
+@onready var variables: Node = $"../Variables"
+@onready var barrier: Node3D = $"../barrier"
+@onready var car_hitbox: Area3D = $"../car1/carHitbox"
+@onready var car_hitbox2: Area3D = $"../car2/carHitbox"
 
 var rng = RandomNumberGenerator.new()
 var startPos = Vector3(-69.50,3.166,0)
@@ -15,14 +15,17 @@ var baseSpeed = 10
 const animals = [
 	"bear",
 	"deer",
+	"frog"
 ]
 
 const offsets = [
 	2,
 	3.166,
+	2,
 ]
 
 var currentAnimal : String
+@warning_ignore("shadowed_variable_base_class")
 var stop = false
 var moving = false
 var target_position: Vector3
@@ -36,6 +39,7 @@ var hit = false
 func randint(minimu:int, maximu:int) -> int:
 	return rng.randi_range(minimu, maximu)
 
+@warning_ignore("shadowed_variable_base_class")
 func glide_to(position: Vector3):
 	target_position = position
 	moving = true
@@ -50,8 +54,10 @@ func wait(minimu:int,maximu:int = -1):
 func respawn():
 	stop = true
 	var pos = startPos
-	hit = false
-	speed = baseSpeed + randint(0,5)
+	if randint(0,2) == 1:
+		speed = baseSpeed + randint(10,30)
+	else:
+		speed = baseSpeed + randint(0,5)
 	pos.z = rng.randi_range(-34,41)
 	animal.position = pos
 	var index = randint(0,len(animals)-1)
@@ -62,6 +68,7 @@ func respawn():
 	animal.position.y = offsets[index]
 	wait(0,5)
 	stop = false
+	hit = false
 	var dest = entrance.position
 	dest.y += basey
 	dest.z += 2
@@ -75,6 +82,7 @@ func delayRespawn(delay:int):
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	stop = true
+	@warning_ignore("narrowing_conversion")
 	basey = animal.position.y
 	wait(1,5)
 	respawn()
@@ -88,14 +96,16 @@ func _process(delta: float) -> void:
 	if not stop:
 		var distance2 = car_hitbox2.global_transform.origin.distance_to(animal.global_transform.origin)
 		var distance1 = car_hitbox.global_transform.origin.distance_to(animal.global_transform.origin)
-		var t = 10
-		print(str(distance1)+" | "+ str(distance2))
+		var t = 5
 		
-		if (distance1 <= t or distance2 <= t) and not hit:
-			hit = true
+		if (distance1 <= t or distance2 <= t) and not hit and walkingStage == 2:
 			die()
+			
 		if moving:
-			animal.animation = "walk_" + currentAnimal
+			if speed >= baseSpeed+10:
+				animal.animation = "run_" + currentAnimal
+			else:
+				animal.animation = "walk_" + currentAnimal
 			var direction = target_position - global_transform.origin
 			var distance = direction.length()
 			
@@ -124,10 +134,14 @@ func _process(delta: float) -> void:
 			animal.animation = "idle_" + currentAnimal
 
 func die():
-	#smok.emitting = true
+	hit = true
 	variables.accidents += 1
-	#await wait(1)
-	animal.visible = false
-	#smok.emitting = false
-	await wait(1)
+	var death_position = animal.global_transform.origin  # global position
+	
+	smok.get_parent().remove_child(smok)
+	get_tree().get_root().add_child(smok)
+	
+	smok.position = death_position
+	smok.restart()
+	smok.emitting = true
 	respawn()
