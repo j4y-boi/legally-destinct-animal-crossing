@@ -2,6 +2,8 @@ extends Node3D
 @onready var car: Node3D = $"."
 @onready var car_front: Sprite3D = $carHitbox/CollisionShape3D/carFront
 @onready var car_back: Sprite3D = $carHitbox/CollisionShape3D/carBack
+@onready var barrier: Node3D = $"../barrier"
+@onready var variables: Node = $"../Variables"
 
 
 const SPEED = 10
@@ -58,14 +60,20 @@ func respawn():
 	newPos()
 
 func _process(delta: float) -> void:
+	var gateOpen = not barrier.is_up
 	if not stop:
 		counter += 1
-		car.translate(Vector3(0,0,(SPEED + randomOffset) * delta))
+		if gateOpen:
+			car.translate(Vector3(0,0,(SPEED/2) * delta))
+		else:
+			car.translate(Vector3(0,0,(SPEED + randomOffset) * delta))
 		# in case we miss hitbox
 		var target_z = startPos[1 - current].z
 		if (current == 0 and car.global_transform.origin.z >= target_z) or (current == 1 and car.global_transform.origin.z <= target_z):
+			variables.carpassed += 1
 			respawn()
 		if counter >= 6000: #in case the in case we miss hitbox fails
+			variables.carpassed += 1
 			respawn()
 
 func _on_tunnel_1_area_entered(_area: Area3D) -> void:

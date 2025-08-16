@@ -8,9 +8,19 @@ var currentCam = 1
 var game_scene = preload("res://scenes/game.tscn")
 var scene1 = game_scene.instantiate()
 
+#keepin it for that stats
+var score = 0
+var accidents = 0
+var carpassed
+
 func _ready():
 	cam1.add_child(scene1)
 	scene1.get_node("lantern/Camera3D2").current = true
+
+func _process(delta: float) -> void:
+	score = scene1.get_node("Variables").score
+	accidents = scene1.get_node("Variables").accidents
+	carpassed = scene1.get_node("Variables").carpassed
 
 func _on_switch_pressed() -> void:
 	if currentCam == 1:

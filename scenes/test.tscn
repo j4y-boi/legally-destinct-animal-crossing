@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://d4d271iit37di"]
+[gd_scene load_steps=6 format=3 uid="uid://d4d271iit37di"]
 
 [ext_resource type="Script" uid="uid://e7i73opncj30" path="res://scripts/cams.gd" id="1_bl13t"]
 [ext_resource type="AudioStream" uid="uid://bqn46dg37hw0e" path="res://assets/audio/sfx/back.wav" id="2_74lek"]
 [ext_resource type="FontFile" uid="uid://c30jgshb7bi81" path="res://assets/fonts/NotJamChunkySansOriginal.ttf" id="2_iyx0m"]
 [ext_resource type="FontFile" uid="uid://bj3vg7jy0wxdy" path="res://assets/fonts/Not Jam Chunky Sans 6.ttf" id="3_74lek"]
+[ext_resource type="Script" uid="uid://cakdm1tyypm81" path="res://scripts/stats.gd" id="5_j5jx5"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -62,7 +63,9 @@ layout_mode = 2
 [node name="Label" type="Label" parent="HBoxContainer/right/controls"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_iyx0m")
-text = "A.C.A. (Animal Crossing Agency)
+text = "A.C.A. 
+(Animal Crossing Agency)
+
 CONTROL PANEL
 -------------"
 horizontal_alignment = 1
@@ -127,23 +130,41 @@ text = "RESTART THE UNIVERSE
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer/right/controls"]
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/right"]
 layout_mode = 2
 
 [node name="stats" type="VBoxContainer" parent="HBoxContainer/right"]
 layout_mode = 2
 size_flags_vertical = 3
+script = ExtResource("5_j5jx5")
 
-[node name="title" type="Label" parent="HBoxContainer/right/stats"]
+[node name="Label" type="Label" parent="HBoxContainer/right/stats"]
 layout_mode = 2
-text = "Stats
------"
+theme_override_fonts/font = ExtResource("2_iyx0m")
+text = "STATS
+-------------"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="time" type="Label" parent="HBoxContainer/right/stats"]
 layout_mode = 2
 text = "Time on the clock : LOADING..."
+
+[node name="amount" type="Label" parent="HBoxContainer/right/stats"]
+layout_mode = 2
+text = "Animals successfully let through: LOADING..."
+
+[node name="accidents" type="Label" parent="HBoxContainer/right/stats"]
+layout_mode = 2
+text = "Accidents: LOADING..."
+
+[node name="cars" type="Label" parent="HBoxContainer/right/stats"]
+layout_mode = 2
+text = "Cars passed: LOADING..."
+
+[node name="score" type="Label" parent="HBoxContainer/right/stats"]
+layout_mode = 2
+text = "Overal efficiency: LOADING..."
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 visible = false
