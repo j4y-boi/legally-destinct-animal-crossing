@@ -33,7 +33,8 @@ var speed = baseSpeed
 var walkingStage = 0
 
 var basey:int
-var gateopen = true
+var gate1open = true
+var gate2open = true
 var hit = false
 
 func randint(minimu:int, maximu:int) -> int:
@@ -91,7 +92,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	animal.visible = not stop
 	smok.position = animal.position
-	gateopen = not barrier.is_up
+	gate1open = not barrier.is_up
+	gate2open = not barrier.is_up2
 	
 	if not stop:
 		var distance2 = car_hitbox2.global_transform.origin.distance_to(animal.global_transform.origin)
@@ -118,13 +120,13 @@ func _process(delta: float) -> void:
 				global_transform.origin += move
 				global_transform.origin.y = basey  # animal ehight
 		else:
-			if walkingStage == 1 and gateopen:
+			if walkingStage == 1 and gate1open:
 				var dest = exit.position
 				dest.y += basey
 				dest.z += 2
 				dest.x -= 2
 				glide_to(dest)
-			elif walkingStage == 2 and gateopen:
+			elif walkingStage == 2 and gate2open:
 				variables.score += 1
 				var dest = Vector3(68,0,randint(-33,39))
 				dest.y += basey
@@ -142,6 +144,14 @@ func die():
 	get_tree().get_root().add_child(smok)
 	
 	smok.position = death_position
+	smok.preprocess = 0  # ensures emission starts immediately
 	smok.restart()
 	smok.emitting = true
 	respawn()
+
+func _on_smok_finished() -> void:
+	if smok.get_parent() != animal:
+		smok.get_parent().remove_child(smok)
+		animal.add_child(smok)
+		smok.transform = Transform3D()
+		smok.emitting = false

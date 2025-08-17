@@ -27,10 +27,10 @@ func _process(delta: float) -> void:
 	$accidents.text = "Accidents: " + str(accidents)
 	$cars.text = "Cars passed: " + str(passed)
 	if score + accidents > 0:
-		accuracy = float(score) / float(score + accidents) * 100
+		accuracy = float(score+passed) / float(score + accidents + passed) * 100
 	else:
 		accuracy = 100.0
-	$score.text = "Success rate: " + str(int(accuracy)) + "%"
+	$score.text = "Overal efficiency: " + str(int(accuracy)) + "%"
 	#$magic.text = nu
 	#var debg = str(score) + " / (" + str(score) + " + " + str(accidents) + ") * 100 = " + str(accuracy)
 	#print(debg)

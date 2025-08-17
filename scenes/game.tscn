@@ -1,4 +1,4 @@
-[gd_scene load_steps=116 format=3 uid="uid://bhk7i0bsqspsy"]
+[gd_scene load_steps=118 format=3 uid="uid://bhk7i0bsqspsy"]
 
 [ext_resource type="Texture2D" uid="uid://omu30pm00fnn" path="res://assets/sky/1.png" id="1_ir15t"]
 [ext_resource type="PackedScene" uid="uid://dbwj6t0r0pamj" path="res://assets/models/tree_thin.glb" id="1_lnu2h"]
@@ -521,7 +521,7 @@ animations = [{
 }]
 
 [sub_resource type="Curve" id="Curve_pl11u"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.502646, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.761905, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0179857), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_bhx41"]
@@ -657,51 +657,95 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
+tracks/0/path = NodePath("barrier1:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0, 0)]
+"values": [Vector3(-17.4905, 0.432524, 2.64985)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("barrier2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.460742, 0.432524, 2.93004)]
 }
 
 [sub_resource type="Animation" id="Animation_suyxu"]
-resource_name = "down"
+resource_name = "down1"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
+tracks/0/path = NodePath("barrier1:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, -2, 0)]
+"values": [Vector3(-17.4905, 0.432524, 2.64985), Vector3(-17.4905, -1.56748, 2.64985)]
 }
 
 [sub_resource type="Animation" id="Animation_sgl2t"]
-resource_name = "up"
+resource_name = "up1"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
+tracks/0/path = NodePath("barrier1:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, -2, 0), Vector3(0, 0, 0)]
+"values": [Vector3(-17.4905, -1.56748, 2.64985), Vector3(-17.4905, 0.432524, 2.64985)]
+}
+
+[sub_resource type="Animation" id="Animation_wljb1"]
+resource_name = "up2"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("barrier2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.460742, -1.56748, 2.93004), Vector3(0.460742, 0.432524, 2.93004)]
+}
+
+[sub_resource type="Animation" id="Animation_qouja"]
+resource_name = "down2"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("barrier2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.460742, 0.432524, 2.93004), Vector3(0.460742, -1.56748, 2.93004)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qouja"]
 _data = {
 &"RESET": SubResource("Animation_sww3w"),
-&"down": SubResource("Animation_suyxu"),
-&"up": SubResource("Animation_sgl2t")
+&"down1": SubResource("Animation_suyxu"),
+&"down2": SubResource("Animation_qouja"),
+&"up1": SubResource("Animation_sgl2t"),
+&"up2": SubResource("Animation_wljb1")
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qnb83"]
@@ -1030,16 +1074,369 @@ texture_filter = 2
 sprite_frames = SubResource("SpriteFrames_sww3w")
 animation = &"run_frog"
 autoplay = "idle_bear"
-frame_progress = 0.352046
+frame_progress = 0.590853
 script = ExtResource("18_pl11u")
 
 [node name="smok" type="GPUParticles3D" parent="animal"]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
 emitting = false
 amount = 100
-lifetime = 2.0
+lifetime = 1.5
 one_shot = true
 explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qnb83")
+draw_pass_1 = SubResource("SphereMesh_suyxu")
+
+[node name="animal2" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -58.805, 1.38865, 2.89062)
+flip_h = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_sww3w")
+animation = &"run_frog"
+autoplay = "idle_bear"
+frame_progress = 0.590853
+script = ExtResource("18_pl11u")
+
+[node name="smok" type="GPUParticles3D" parent="animal2"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
+emitting = false
+amount = 100
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qnb83")
+draw_pass_1 = SubResource("SphereMesh_suyxu")
+
+[node name="animal3" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -58.805, 1.38865, 2.89062)
+flip_h = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_sww3w")
+animation = &"run_frog"
+autoplay = "idle_bear"
+frame_progress = 0.590853
+script = ExtResource("18_pl11u")
+
+[node name="smok" type="GPUParticles3D" parent="animal3"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
+emitting = false
+amount = 100
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qnb83")
+draw_pass_1 = SubResource("SphereMesh_suyxu")
+
+[node name="animal4" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -58.805, 1.38865, 2.89062)
+flip_h = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_sww3w")
+animation = &"run_frog"
+autoplay = "idle_bear"
+frame_progress = 0.590853
+script = ExtResource("18_pl11u")
+
+[node name="smok" type="GPUParticles3D" parent="animal4"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
+emitting = false
+amount = 100
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qnb83")
+draw_pass_1 = SubResource("SphereMesh_suyxu")
+
+[node name="animal5" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -58.805, 1.38865, 2.89062)
+flip_h = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_sww3w")
+animation = &"run_frog"
+autoplay = "idle_bear"
+frame_progress = 0.590853
+script = ExtResource("18_pl11u")
+
+[node name="smok" type="GPUParticles3D" parent="animal5"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
+emitting = false
+amount = 100
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qnb83")
+draw_pass_1 = SubResource("SphereMesh_suyxu")
+
+[node name="animal6" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -58.805, 1.38865, 2.89062)
+flip_h = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_sww3w")
+animation = &"run_frog"
+autoplay = "idle_bear"
+frame_progress = 0.590853
+script = ExtResource("18_pl11u")
+
+[node name="smok" type="GPUParticles3D" parent="animal6"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
+emitting = false
+amount = 100
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qnb83")
+draw_pass_1 = SubResource("SphereMesh_suyxu")
+
+[node name="animal7" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -58.805, 1.38865, 2.89062)
+flip_h = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_sww3w")
+animation = &"run_frog"
+autoplay = "idle_bear"
+frame_progress = 0.590853
+script = ExtResource("18_pl11u")
+
+[node name="smok" type="GPUParticles3D" parent="animal7"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
+emitting = false
+amount = 100
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qnb83")
+draw_pass_1 = SubResource("SphereMesh_suyxu")
+
+[node name="animal8" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -58.805, 1.38865, 2.89062)
+flip_h = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_sww3w")
+animation = &"run_frog"
+autoplay = "idle_bear"
+frame_progress = 0.590853
+script = ExtResource("18_pl11u")
+
+[node name="smok" type="GPUParticles3D" parent="animal8"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
+emitting = false
+amount = 100
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qnb83")
+draw_pass_1 = SubResource("SphereMesh_suyxu")
+
+[node name="animal9" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -58.805, 1.38865, 2.89062)
+flip_h = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_sww3w")
+animation = &"run_frog"
+autoplay = "idle_bear"
+frame_progress = 0.590853
+script = ExtResource("18_pl11u")
+
+[node name="smok" type="GPUParticles3D" parent="animal9"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
+emitting = false
+amount = 100
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qnb83")
+draw_pass_1 = SubResource("SphereMesh_suyxu")
+
+[node name="animal10" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -58.805, 1.38865, 2.89062)
+flip_h = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_sww3w")
+animation = &"run_frog"
+autoplay = "idle_bear"
+frame_progress = 0.590853
+script = ExtResource("18_pl11u")
+
+[node name="smok" type="GPUParticles3D" parent="animal10"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
+emitting = false
+amount = 100
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qnb83")
+draw_pass_1 = SubResource("SphereMesh_suyxu")
+
+[node name="animal11" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -58.805, 1.38865, 2.89062)
+flip_h = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_sww3w")
+animation = &"run_frog"
+autoplay = "idle_bear"
+frame_progress = 0.590853
+script = ExtResource("18_pl11u")
+
+[node name="smok" type="GPUParticles3D" parent="animal11"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
+emitting = false
+amount = 100
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qnb83")
+draw_pass_1 = SubResource("SphereMesh_suyxu")
+
+[node name="animal12" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -58.805, 1.38865, 2.89062)
+flip_h = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_sww3w")
+animation = &"run_frog"
+autoplay = "idle_bear"
+frame_progress = 0.590853
+script = ExtResource("18_pl11u")
+
+[node name="smok" type="GPUParticles3D" parent="animal12"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
+emitting = false
+amount = 100
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qnb83")
+draw_pass_1 = SubResource("SphereMesh_suyxu")
+
+[node name="animal13" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -58.805, 1.38865, 2.89062)
+flip_h = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_sww3w")
+animation = &"run_frog"
+autoplay = "idle_bear"
+frame_progress = 0.590853
+script = ExtResource("18_pl11u")
+
+[node name="smok" type="GPUParticles3D" parent="animal13"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
+emitting = false
+amount = 100
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qnb83")
+draw_pass_1 = SubResource("SphereMesh_suyxu")
+
+[node name="animal14" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -58.805, 1.38865, 2.89062)
+flip_h = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_sww3w")
+animation = &"run_frog"
+autoplay = "idle_bear"
+frame_progress = 0.590853
+script = ExtResource("18_pl11u")
+
+[node name="smok" type="GPUParticles3D" parent="animal14"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
+emitting = false
+amount = 100
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qnb83")
+draw_pass_1 = SubResource("SphereMesh_suyxu")
+
+[node name="animal15" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -58.805, 1.38865, 2.89062)
+flip_h = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_sww3w")
+animation = &"run_frog"
+autoplay = "idle_bear"
+frame_progress = 0.590853
+script = ExtResource("18_pl11u")
+
+[node name="smok" type="GPUParticles3D" parent="animal15"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
+emitting = false
+amount = 100
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qnb83")
+draw_pass_1 = SubResource("SphereMesh_suyxu")
+
+[node name="animal16" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -58.805, 1.38865, 2.89062)
+flip_h = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_sww3w")
+animation = &"run_frog"
+autoplay = "idle_bear"
+frame_progress = 0.590853
+script = ExtResource("18_pl11u")
+
+[node name="smok" type="GPUParticles3D" parent="animal16"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
+emitting = false
+amount = 100
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qnb83")
+draw_pass_1 = SubResource("SphereMesh_suyxu")
+
+[node name="animal17" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -58.805, 1.38865, 2.89062)
+flip_h = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_sww3w")
+animation = &"run_frog"
+autoplay = "idle_bear"
+frame_progress = 0.590853
+script = ExtResource("18_pl11u")
+
+[node name="smok" type="GPUParticles3D" parent="animal17"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 2.28137e-05, 3.77893e-05)
+emitting = false
+amount = 100
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_qnb83")
 draw_pass_1 = SubResource("SphereMesh_suyxu")
@@ -1130,12 +1527,21 @@ transform = Transform3D(19, 0, 0, 0, 19, 0, 0, 0, 40, -17.4905, 0.432524, 2.6498
 [node name="barrier2" parent="barrier" instance=ExtResource("25_bhx41")]
 transform = Transform3D(19, 0, 0, 0, 19, 0, 0, 0, 40, 0.460742, 0.432524, 2.93004)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="barrier"]
+[node name="control1" type="AnimationPlayer" parent="barrier"]
 libraries = {
 &"": SubResource("AnimationLibrary_qouja")
 }
 
-[node name="gateCloser" type="Timer" parent="barrier"]
+[node name="control2" type="AnimationPlayer" parent="barrier"]
+libraries = {
+&"": SubResource("AnimationLibrary_qouja")
+}
+
+[node name="gateCloser1" type="Timer" parent="barrier"]
+wait_time = 6.0
+one_shot = true
+
+[node name="gateCloser2" type="Timer" parent="barrier"]
 wait_time = 6.0
 one_shot = true
 
@@ -1152,7 +1558,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.62708, 2.13232, 2.63626)
 shape = SubResource("BoxShape3D_qnb83")
 
+[connection signal="finished" from="animal/smok" to="animal" method="_on_smok_finished"]
+[connection signal="finished" from="animal2/smok" to="animal2" method="_on_smok_finished"]
+[connection signal="finished" from="animal3/smok" to="animal3" method="_on_smok_finished"]
+[connection signal="finished" from="animal4/smok" to="animal4" method="_on_smok_finished"]
+[connection signal="finished" from="animal5/smok" to="animal5" method="_on_smok_finished"]
+[connection signal="finished" from="animal6/smok" to="animal6" method="_on_smok_finished"]
+[connection signal="finished" from="animal7/smok" to="animal7" method="_on_smok_finished"]
+[connection signal="finished" from="animal8/smok" to="animal8" method="_on_smok_finished"]
+[connection signal="finished" from="animal9/smok" to="animal9" method="_on_smok_finished"]
+[connection signal="finished" from="animal10/smok" to="animal10" method="_on_smok_finished"]
+[connection signal="finished" from="animal11/smok" to="animal11" method="_on_smok_finished"]
+[connection signal="finished" from="animal12/smok" to="animal12" method="_on_smok_finished"]
+[connection signal="finished" from="animal13/smok" to="animal13" method="_on_smok_finished"]
+[connection signal="finished" from="animal14/smok" to="animal14" method="_on_smok_finished"]
+[connection signal="finished" from="animal15/smok" to="animal15" method="_on_smok_finished"]
+[connection signal="finished" from="animal16/smok" to="animal16" method="_on_smok_finished"]
+[connection signal="finished" from="animal17/smok" to="animal17" method="_on_smok_finished"]
 [connection signal="area_entered" from="car1/carHitbox" to="animal" method="_on_car_hitbox_area_entered"]
 [connection signal="area_entered" from="car2/carHitbox" to="animal" method="_on_car_hitbox_area_entered"]
-[connection signal="animation_finished" from="barrier/AnimationPlayer" to="barrier" method="_on_animation_player_animation_finished"]
-[connection signal="timeout" from="barrier/gateCloser" to="barrier" method="_on_gate_closer_timeout"]
+[connection signal="animation_finished" from="barrier/control1" to="barrier" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="barrier/control2" to="barrier" method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="barrier/gateCloser1" to="barrier" method="_on_gate_closer_1_timeout"]
+[connection signal="timeout" from="barrier/gateCloser2" to="barrier" method="_on_gate_closer_2_timeout"]

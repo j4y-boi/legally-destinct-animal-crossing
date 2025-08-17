@@ -43,12 +43,31 @@ func _on_switch_pressed() -> void:
 
 func _on_close_pressed() -> void:
 	var is_up = scene1.get_node("barrier").is_up
-	var animationPlayer = scene1.get_node("barrier/AnimationPlayer")
+	var control1 = scene1.get_node("barrier/control1")
+	var control2 = scene1.get_node("barrier/control2")
+	if not control1.current_animation != "" and not control2.current_animation != "":
+		if is_up:
+			scene1.get_node("barrier").lower(0)
+		else:
+			scene1.get_node("barrier").raise(0)
+
+func _on_toggle_1_pressed() -> void:
+	var is_up = scene1.get_node("barrier").is_up
+	var animationPlayer = scene1.get_node("barrier/control1")
 	if not animationPlayer.current_animation != "":
 		if is_up:
-			scene1.get_node("barrier").lower()
+			scene1.get_node("barrier").lower(1)
 		else:
-			scene1.get_node("barrier").raise()
+			scene1.get_node("barrier").raise(1)
+
+func _on_toggle_2_pressed() -> void:
+	var is_up2 = scene1.get_node("barrier").is_up2
+	var animationPlayer = scene1.get_node("barrier/control2")
+	if not animationPlayer.current_animation != "":
+		if is_up2:
+			scene1.get_node("barrier").lower(2)
+		else:
+			scene1.get_node("barrier").raise(2)
 
 func _on_exit_pressed() -> void:
 	fg.modulate.a = 0.0
