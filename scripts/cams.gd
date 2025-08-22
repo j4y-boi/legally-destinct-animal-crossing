@@ -25,7 +25,7 @@ func _ready():
 		window.visible = true
 		camcontainer_1.visible = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	score = scene1.get_node("Variables").score
 	accidents = scene1.get_node("Variables").accidents
 	carpassed = scene1.get_node("Variables").carpassed

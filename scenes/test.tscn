@@ -49,6 +49,7 @@ stretch = true
 
 [node name="cam1" type="SubViewport" parent="HBoxContainer/camcontainer1"]
 handle_input_locally = false
+canvas_item_default_texture_filter = 0
 size = Vector2i(700, 648)
 render_target_update_mode = 4
 
@@ -68,6 +69,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="HBoxContainer/right/controls"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_iyx0m")
+theme_override_font_sizes/font_size = 18
 text = "A.C.A. 
 (Animal Crossing Agency)
 
@@ -83,6 +85,7 @@ layout_mode = 2
 [node name="Label2" type="Label" parent="HBoxContainer/right/controls"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_iyx0m")
+theme_override_font_sizes/font_size = 18
 text = "- Camera Controls -"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -100,6 +103,7 @@ layout_mode = 2
 [node name="Label3" type="Label" parent="HBoxContainer/right/controls"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_iyx0m")
+theme_override_font_sizes/font_size = 18
 text = "- Gate Controls -"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -133,6 +137,7 @@ layout_mode = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(0.99, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_iyx0m")
+theme_override_font_sizes/font_size = 18
 text = "- EMERGENCIES -"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -153,31 +158,38 @@ layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("5_j5jx5")
 
-[node name="Label" type="Label" parent="HBoxContainer/right/stats"]
+[node name="title" type="Label" parent="HBoxContainer/right/stats"]
+texture_filter = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_iyx0m")
+theme_override_font_sizes/font_size = 18
 text = "STATS
 -------------"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="time" type="Label" parent="HBoxContainer/right/stats"]
+texture_filter = 2
 layout_mode = 2
 text = "Time on the clock : LOADING..."
 
 [node name="amount" type="Label" parent="HBoxContainer/right/stats"]
+texture_filter = 2
 layout_mode = 2
 text = "Animals successfully let through: LOADING..."
 
 [node name="accidents" type="Label" parent="HBoxContainer/right/stats"]
+texture_filter = 2
 layout_mode = 2
 text = "Accidents: LOADING..."
 
 [node name="cars" type="Label" parent="HBoxContainer/right/stats"]
+texture_filter = 2
 layout_mode = 2
 text = "Cars passed: LOADING..."
 
 [node name="score" type="Label" parent="HBoxContainer/right/stats"]
+texture_filter = 2
 layout_mode = 2
 text = "Overal efficiency: LOADING..."
 

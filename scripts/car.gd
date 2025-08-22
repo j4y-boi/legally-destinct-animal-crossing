@@ -64,7 +64,7 @@ func _process(delta: float) -> void:
 	var gate2Open = not barrier.is_up2
 	if not stop:
 		counter += 1
-		if gateOpen or gate2Open:
+		if gateOpen:
 			car.translate(Vector3(0,0,float(SPEED)/2 * delta))
 		else:
 			car.translate(Vector3(0,0,(SPEED + randomOffset) * delta))

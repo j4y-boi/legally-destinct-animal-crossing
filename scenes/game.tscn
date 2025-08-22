@@ -1,8 +1,8 @@
-[gd_scene load_steps=118 format=3 uid="uid://bhk7i0bsqspsy"]
+[gd_scene load_steps=115 format=3 uid="uid://bhk7i0bsqspsy"]
 
-[ext_resource type="Texture2D" uid="uid://omu30pm00fnn" path="res://assets/sky/1.png" id="1_ir15t"]
 [ext_resource type="PackedScene" uid="uid://dbwj6t0r0pamj" path="res://assets/models/tree_thin.glb" id="1_lnu2h"]
 [ext_resource type="Script" uid="uid://o8a1yfn7hth" path="res://scripts/variables.gd" id="1_qnb83"]
+[ext_resource type="Script" uid="uid://dgrynxf3t6oli" path="res://scripts/lighting.gd" id="1_qouja"]
 [ext_resource type="PackedScene" uid="uid://b7ij482s288hc" path="res://assets/models/ground_grass.glb" id="2_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://d310wkido4uno" path="res://assets/models/road-straight.glb" id="3_iywne"]
 [ext_resource type="PackedScene" uid="uid://y66mlywahjs2" path="res://assets/models/road-crossing.glb" id="4_bt5mj"]
@@ -31,20 +31,6 @@
 [ext_resource type="FontFile" uid="uid://bj3vg7jy0wxdy" path="res://assets/fonts/Not Jam Chunky Sans 6.ttf" id="23_bhx41"]
 [ext_resource type="PackedScene" uid="uid://b2d8bmgklaqc6" path="res://scenes/barrier.tscn" id="25_bhx41"]
 [ext_resource type="Script" uid="uid://cyqyx7hsc1sek" path="res://scripts/barrier.gd" id="25_qnb83"]
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ca42v"]
-panorama = ExtResource("1_ir15t")
-filter = false
-
-[sub_resource type="Sky" id="Sky_uwrxv"]
-sky_material = SubResource("PanoramaSkyMaterial_ca42v")
-
-[sub_resource type="Environment" id="Environment_yqjtg"]
-background_mode = 2
-sky = SubResource("Sky_uwrxv")
-sky_rotation = Vector3(3.65646, 0, 0)
-ambient_light_energy = 0.0
-glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lnu2h"]
 albedo_color = Color(0.521141, 0.521141, 0.521141, 1)
@@ -752,18 +738,10 @@ _data = {
 size = Vector3(6, 5.26465, 8.50507)
 
 [node name="Node3D" type="Node3D"]
+script = ExtResource("1_qouja")
 
 [node name="Variables" type="Node" parent="."]
 script = ExtResource("1_qnb83")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_yqjtg")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
-light_energy = 0.68
-light_bake_mode = 1
-shadow_enabled = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_p57ef")

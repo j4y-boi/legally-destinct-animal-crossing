@@ -139,14 +139,14 @@ func die():
 	hit = true
 	variables.accidents += 1
 	var death_position = animal.global_transform.origin  # global position
-	
-	smok.get_parent().remove_child(smok)
-	get_tree().get_root().add_child(smok)
-	
-	smok.position = death_position
-	smok.preprocess = 0  # ensures emission starts immediately
-	smok.restart()
-	smok.emitting = true
+	if not OS.get_name() == "Web":
+		smok.get_parent().remove_child(smok)
+		get_tree().get_root().add_child(smok)
+		
+		smok.position = death_position
+		smok.preprocess = 0  # ensures emission starts immediately
+		smok.restart()
+		smok.emitting = true
 	respawn()
 
 func _on_smok_finished() -> void:
