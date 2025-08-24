@@ -14,8 +14,6 @@ In this game you work for the A.C.A. (Animal Crossing Agency), where you need to
 Download the game or play it in your browser (buggy) from the [itch.io page](https://j4y-boi.itch.io/ld-animal-crossing).
 
 ## Known Bugs
-- Lighting is very broken on web
-- Random lag spikes on web
 - Particles appearing on a delay
 
 ## Some screenshots:
