@@ -21,3 +21,6 @@ Download the game or play it in your browser (buggy) from the [itch.io page](htt
 <img width="2300" height="1296" alt="screenshot1" src="https://github.com/user-attachments/assets/37470404-a15c-42f3-8709-7c4a0e4d5419" />
 <img width="2301" height="1295" alt="screenshot2" src="https://github.com/user-attachments/assets/31264f10-c7de-41b7-844e-0f5119875cf7" />
 <img width="2298" height="1291" alt="screenshot3" src="https://github.com/user-attachments/assets/0725448c-5a63-4fe9-b839-ed4c87dda302" />
+
+## License
+Legally Distinct Animal Crossing by [j4y_boi](https://github.com/j4y-boi) is licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
